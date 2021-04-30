@@ -1,0 +1,86 @@
+#!/usr/bin/env node
+
+const program = require('commander')
+const inquirer = require('inquirer')
+const chalk = require('chalk')
+const fs = require('fs');
+const handlebars = require('handlebars')
+const ora = require('ora')
+const download = require('download-git-repo')
+const tplObj = require(`${__dirname}/../template`)
+const symbols = require('log-symbols')
+
+// 取值
+program
+  .usage('<template-name> [project-name]')
+  .parse(process.argv)
+// 当没有输入参数的时候给个提示
+if (program.args.length < 1) return program.help()
+// 好比 vue init webpack project-name 的命令一样，第一个参数是 webpack，第二个参数是 project-name
+let templateName = program.args[0] ? program.args[0].replace(/\s/g, '') : ''
+let projectName = program.args[1] ? program.args[1].replace(/\s/g, '') : ''
+// 小小校验一下参数 模板名是否存在
+if (!tplObj[templateName]) {
+  console.log(chalk.red('\n Template does not exit! \n '))
+  return
+}
+// 初始化的项目名是否为空
+if (!projectName) {
+  console.log(chalk.red('\n Project should not be empty! \n '))
+  return
+}
+url = tplObj[templateName]
+console.log(symbols.success, chalk.yellow('模板名称', templateName))
+console.log(symbols.success, chalk.yellow('创建的项目名称', projectName))
+console.log(symbols.success, chalk.yellow('克隆仓库地址', url))
+// 询问并插入到选择模板的文档中
+program
+  .version('1.0.0', '-v, --version')
+if (!fs.existsSync(projectName)) {
+  inquirer.prompt([
+    {
+      name: 'name',
+      message: '请输入项目名称'
+    },
+    {
+      name: 'version',
+      message: '请输入版本号'
+    },
+    {
+      name: 'description',
+      message: '请输入项目描述'
+    },
+    {
+      name: 'author',
+      message: '请输入作者名称'
+    }
+  ]).then((answers) => {
+    const spinner = ora('正在下载模板...');
+    spinner.start();
+    download(url, projectName, { clone: true }, (err) => {
+      if (err) {
+        spinner.fail();
+        console.log(symbols.error, chalk.red(err));
+        return
+      }
+      spinner.succeed();
+      const fileName = `${projectName}/package.json`;
+      const meta = {
+        name: answers.name || projectName,
+        description: answers.description || '新项目',
+        author: answers.author || 'own',
+        version: answers.version || '1.0.0'
+      }
+      // 处理读取的json文件
+      if (fs.existsSync(fileName)) {
+        const content = fs.readFileSync(fileName).toString();
+        const result = handlebars.compile(content)(meta);
+        fs.writeFileSync(fileName, result);
+      }
+      console.log(symbols.success, chalk.green('项目初始化完成 请手动npm install'));
+    })
+  })
+  return
+}
+// 错误提示项目已存在，避免覆盖原有项目
+console.log(symbols.error, chalk.red('本地项目已存在，请勿重新创建'))

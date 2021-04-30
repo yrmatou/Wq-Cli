@@ -1,0 +1,6 @@
+#!/usr/bin/env node
+
+const symbols = require('log-symbols')
+const chalk = require('chalk')
+const tplObj = require(`${__dirname}/../template`)
+console.log(symbols.success, chalk.green('模板列表'), tplObj)
