@@ -1,23 +1,23 @@
 '&&'
 ## 项目介绍
 
-* 方便创建PC端、uni-app多端 项目模板 仅适合公司内部 类似于vue-cli方式创建项目
-* 后面有新的项目模板 先添加到模板库里 template.json这个文件里面再publish 公司npm服务器上
-* http或者https仓库地址并且地址前面加上direct: 示例http://gitlab.wonker/dev/vue-pc-template.git
+* 方便创建PC端、uni-app多端 项目模板 类似于vue-cli方式创建项目
+* 后面有新的项目模板 先添加到模板库里 template.json这个文件里面再publish npm服务器上
+* http或者https仓库地址并且地址前面加上direct: 示例http://xxxx
 
 ## 注意事项
 
 * '&&'和'&&'之间的部分为开发阶段的readme，切勿删除
-* 执行npm run build:publish之前一定要执行npm login 账号：admin 密码：admin 邮箱：随便输
+* 执行npm run build:publish之前一定要执行npm login 账号：xxx 密码：xxx 邮箱：xxx
 
 ## 源码目录介绍
 ```
 ./bin
-├── wk-cli                                 // 项目指令集合（指令名称调整必须更改这个文件）
-├── wk-cli-add                             // 添加模板指令 
-├── wk-cli-delete                          // 删除模板指令 
-├── wk-cli-list                            // 展开模板指令 
-├── wk-cli-create                          // 创建项目指令 
+├── wq-cli                                 // 项目指令集合（指令名称调整必须更改这个文件）
+├── wq-cli-add                             // 添加模板指令 
+├── wq-cli-delete                          // 删除模板指令 
+├── wq-cli-list                            // 展开模板指令 
+├── wq-cli-create                          // 创建项目指令 
 template.json                              // 模板库 {name:address} 模板名：模板github或者gitlab地址
 package.json                               // 项目配置文件 
 
@@ -34,7 +34,7 @@ package.json                               // 项目配置文件
 ## 发布版本
   
 ```js
-  npm login 账号：admin 密码：admin 邮箱：随便输
+  npm login 账号：xxx 密码：xxx 邮箱：xxx
 
   注意每次更改完 修改package.json中的 version 版本号 递增
 
@@ -45,44 +45,44 @@ package.json                               // 项目配置文件
 '&&'
 ## 使用介绍
 
-**第一步，因为是公司内部使用 首先把 npm config set registry http://npm.wonker**
-**有些依赖在公司搭建的[npm服务器上](http://npm.wonker/)**
+**第一步，首先把 npm config set registry xxx 指向你自己项目的源**
+**有些依赖在公司搭建的[npm服务器上](http://xxx/)**
 
 ```js
-  执行命令 npm install wk-cli -g 或者 yarn add wk-cli -g
+  执行命令 npm install wq-cli -g 或者 yarn add wq-cli -g
 ```
-  **1. wk-cli add 添加模板命令**
+  **1. wq-cli add 添加模板命令**
 ```js
   执行命令 第一个参数是自定义模板名称 第二个参数是仓库地址
   http或者https仓库地址并且地址前面加上direct:
-  示例：direct:http://gitlab.wonker/dev/vue-pc-template.git
+  示例：direct:http://xxxx
 ```
-  ![wk-cli add](http://gitlab.wonker/dev/vue-cli-custom/-/raw/master/statics/add.png)
+  ![wq-cli add](https://github.com/wangQiaoBrother/wq-cli/blob/master/statics/add.png?raw=true)
 
-  **2. wk-cli delete 删除模板命令**
+  **2. wq-cli delete 删除模板命令**
 ```js
   执行命令 第一个参数是自定义模板名称 存在即直接删除
 ```
-![wk-cli delete](http://gitlab.wonker/dev/vue-cli-custom/-/raw/master/statics/delete.png)
+![wq-cli delete](https://github.com/wangQiaoBrother/wq-cli/blob/master/statics/delete.png?raw=true)
 
-  **3. wk-cli list 显示所有模板命令**
+  **3. wq-cli list 显示所有模板命令**
 ```js
   执行命令 打印出一个对象里面的所有模板 键值对
 ```
-![wk-cli delete](http://gitlab.wonker/dev/vue-cli-custom/-/raw/master/statics/list.png)
+![wq-cli delete](https://github.com/wangQiaoBrother/wq-cli/blob/master/statics/list.png?raw=true)
 
-  **4. wk-cli create 创建项目命令**
+  **4. wq-cli create 创建项目命令**
 ```js
   执行命令 类似于vue-cli
 ```
-![wk-cli create](http://gitlab.wonker/dev/vue-cli-custom/-/raw/master/statics/create.png)
+![wq-cli create](https://github.com/wangQiaoBrother/wq-cli/blob/master/statics/create.png?raw=true)
 
 ***
 ## F A Q
 
-* npm install wk-cli -g 不成功首先看下 registry是否指向http://npm.wonker，再不行切换yarn install wk-cli -g 下载
-* wk-cli add 模板地址务必加上 direct:http://xxxxx，否则无法下载。
-* wk-cli add 添加模板后只会添加到自己本地环境， 修改此项目template.json模板文件发布版本，才能更改npm包的模板
+* npm install wq-cli -g 不成功首先看下 registry是否指向http://xxx，再不行切换yarn install wq-cli -g 下载
+* wq-cli add 模板地址务必加上 direct:http://xxxxx，否则无法下载。
+* wq-cli add 添加模板后只会添加到自己本地环境， 修改此项目template.json模板文件发布版本，才能更改npm包的模板
 文件
 * 指令名称修改后先执行npm unlink 再 npm link，否则无法识别指令
 '&&'
